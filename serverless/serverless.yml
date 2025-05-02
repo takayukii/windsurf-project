@@ -1,0 +1,26 @@
+service: windsurf-serverless
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'ap-northeast-1'}
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+functions:
+  graphql:
+    handler: src/functions/graphql.handler
+    events:
+      - http:
+          path: graphql
+          method: post
+          cors: true
+      - http:
+          path: graphql
+          method: get
+          cors: true
